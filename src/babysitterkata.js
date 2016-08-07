@@ -1,4 +1,5 @@
-
+//set up schedule range and payrate as objects to make these items easy to
+// change without having to change the rest of the code
 var scheduleRange = {
   start: 5,
   lateNight: 12,
@@ -11,6 +12,8 @@ var payrate = {
   afterMidnight: 16
 }
 
+//Argument is a string formatted as a normal time "3:00" or "6:01PM" for example
+//returns a number representing the amount the babysitter should be paid
 function finalInvoice (startTime, bedTime, endTime){
   var start = formatTime(startTime);
   var bedtime = formatTime(bedTime);
@@ -21,6 +24,8 @@ function finalInvoice (startTime, bedTime, endTime){
     };
   };
 
+//Argument is a string formatted as a normal time "3:00" or "6:01PM" for example
+//returns a one or two digit number
 function formatTime(time){
   if (time.indexOf('00') === -1){
     time = Number(time.split(":").shift()) + 1;
@@ -33,6 +38,8 @@ function formatTime(time){
   return time;
 };
 
+//arguments should be numbers
+//returns a number
 var calculateBeforeBed = function (start, bedtime) {
     if (bedtime > start && bedtime <= scheduleRange.lateNight){
     var beforeBedEarned = (bedtime - start) * payrate.beforeBed;
@@ -45,6 +52,8 @@ var calculateBeforeBed = function (start, bedtime) {
   }
 };
 
+//arguments should be numbers
+//returns a number
 var calculateAfterBed = function (start, bedtime, end) {
   if (bedtime > start && bedtime <= scheduleRange.lateNight && bedtime <= end) {
     var afterBedEarned = (scheduleRange.lateNight - bedtime) * payrate.sleeping;
@@ -61,6 +70,8 @@ var calculateAfterBed = function (start, bedtime, end) {
   }
 };
 
+//argument should be a number
+//returns a number
 var calculateAfterMidnight = function (start, end) {
   if (end > scheduleRange.lateNight && start <= scheduleRange.lateNight) {
     var lateNightEarned = (end - scheduleRange.lateNight) * payrate.afterMidnight;
