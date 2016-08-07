@@ -1,5 +1,4 @@
 
-
 var scheduleRange = {
   start: 5,
   lateNight: 12,
@@ -22,7 +21,6 @@ function finalInvoice (startTime, bedTime, endTime){
     };
   };
 
-
 function formatTime(time){
   if (time.indexOf('00') === -1){
     time = Number(time.split(":").shift()) + 1;
@@ -34,7 +32,6 @@ function formatTime(time){
   }
   return time;
 };
-
 
 var calculateBeforeBed = function (start, bedtime) {
     if (bedtime > start && bedtime <= scheduleRange.lateNight){

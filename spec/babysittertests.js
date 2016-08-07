@@ -5,6 +5,15 @@ describe('jasmine test', function(){
 
 });
 
+describe('babysitter is not allowed to work outside of the time range', function(){
+  it('should return undefined if start time is 7pm, bedtime is 10pm, and end is 8am', function() {
+    expect(finalInvoice("7:00", "10:00", "20:00")).not.toBeDefined();
+  });
+  it('should return defined if babysitter is within time range', function() {
+    expect(finalInvoice("10:00", "1:00", "4:00")).toBeDefined();
+  });
+});
+
 describe('time should be rounded up', function(){
   it('should return 8 when time is 7:01', function() {
     expect(formatTime('7:01')).toBe(8);
@@ -64,6 +73,6 @@ describe('babysitter earns a sum of all segments', function(){
     expect(finalInvoice("10:00", "1:00", "4:00")).toBe(88);
   });
   it('should return $88 if start time is 10pm, bedtime is 1am and end is 4am', function() {
-    expect(finalInvoice("9:20", "1:00", "3:01")).toBe(88);
+    expect(finalInvoice("9:20PM", "1:00am", "3:01pm")).toBe(88);
   });
 });
