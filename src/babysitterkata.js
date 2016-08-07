@@ -1,5 +1,6 @@
 var scheduleRange = {
   start: 5,
+  lateNight: 12,
   end: 16,
 }
 
@@ -10,12 +11,40 @@ var payrate = {
 }
 
 var calculateBeforeBed = function (start, bedtime) {
-    if (bedtime > start && bedtime < 12){
+    if (bedtime > start && bedtime <= scheduleRange.lateNight){
     var beforeBedEarned = (bedtime - start) * payrate.beforeBed;
     return beforeBedEarned;
-  } else if (bedtime > 12) {
-    var beforeBedEarned = (12 - start) * payrate.beforeBed;
+  } else if (bedtime > scheduleRange.lateNight) {
+    var beforeBedEarned = (scheduleRange.lateNight - start) * payrate.beforeBed;
     return beforeBedEarned;
+  } else {
+    return 0;
+  }
+};
+
+var calculateAfterBed = function (start, bedtime, end) {
+  if (bedtime > start && bedtime <= scheduleRange.lateNight && bedtime <= end) {
+    var afterBedEarned = (bedtime - start) * payrate.sleeping;
+    return afterBedEarned;
+  } else if (bedtime <= start && end <= scheduleRange.lateNight){
+    afterBedEarned = (end - start) * payrate.sleeping;
+    return afterBedEarned;
+  } else if (bedtime <= start && end > scheduleRange.lateNight){
+    afterBedEarned = (scheduleRange.lateNight - start) * payrate.sleeping;
+    return afterBedEarned;
+  }
+  else {
+    return 0;
+  }
+};
+
+var calculateAfterMidnight = function (start, end) {
+  if (end > scheduleRange.lateNight && start <= scheduleRange.lateNight) {
+    var lateNightEarned = (end - scheduleRange.lateNight) * payrate.afterMidnight;
+    return lateNightEarned;
+  } else if (end > scheduleRange.lateNight && start > scheduleRange.lateNight) {
+    lateNightEarned = (end - start) * payrate.afterMidnight;
+    return lateNightEarned;
   } else {
     return 0;
   }

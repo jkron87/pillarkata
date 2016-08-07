@@ -37,3 +37,21 @@ describe('babysitter earns $12/hour before bedtime', function(){
     expect(calculateBeforeBed(9, 13)).toBe(36);
   });
 });
+
+describe('babysitter earns $8/hour after bedtime', function(){
+  it('should return $40 if start time is 6pm, bedtime is 5pm, and end is 10pm', function() {
+    expect(calculateAfterBed(6, 5, 10)).toBe(32);
+  });
+  it('should return $28 if start time is 9pm and bedtime is 9pm and end is 12am', function() {
+    expect(calculateAfterBed(9, 9, 12)).toBe(24);
+  });
+});
+
+describe('babysitter earns $16/hour after midnight', function(){
+  it('should return $48 if start time is 6pm and end is 3am', function() {
+    expect(calculateAfterMidnight(6, 15)).toBe(48);
+  });
+  it('should return $32 if start time is 1am and end is 3am', function() {
+    expect(calculateAfterMidnight(13, 15)).toBe(32);
+  });
+});
