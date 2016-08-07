@@ -1,0 +1,19 @@
+{
+  "name": "pillarkata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jasmine": "^2.4.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.1.2",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2"
+  }
+}
