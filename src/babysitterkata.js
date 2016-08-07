@@ -1,3 +1,5 @@
+
+
 var scheduleRange = {
   start: 5,
   lateNight: 12,
@@ -9,6 +11,30 @@ var payrate = {
   sleeping: 8,
   afterMidnight: 16
 }
+
+function finalInvoice (startTime, bedTime, endTime){
+  var start = formatTime(startTime);
+  var bedtime = formatTime(bedTime);
+  var end = formatTime(endTime);
+  if(start >= scheduleRange.start && end <= scheduleRange.end){
+    var pay = calculateBeforeBed(start, bedtime) + calculateAfterBed(start, bedtime, end)+ calculateAfterMidnight(start, end);
+    return pay;
+    };
+  };
+
+
+function formatTime(time){
+  if (time.indexOf('00') === -1){
+    time = Number(time.split(":").shift()) + 1;
+  } else {
+    time = Number(time.split(":").shift());
+  }
+  if (time < 5) {
+    time = time + 12;
+  }
+  return time;
+};
+
 
 var calculateBeforeBed = function (start, bedtime) {
     if (bedtime > start && bedtime <= scheduleRange.lateNight){
@@ -48,26 +74,4 @@ var calculateAfterMidnight = function (start, end) {
   } else {
     return 0;
   }
-};
-
-function finalInvoice (start, bedtime, end){
-  if(start >= scheduleRange.start && end <= scheduleRange.end){
-    var pay = calculateBeforeBed(start, bedtime) + calculateAfterBed(start, bedtime, end)+ calculateAfterMidnight(start, end);
-    return pay;
-    };
-  };
-
-
-
-
-function formatTime(time){
-  if (time.indexOf('00') === -1){
-    time = Number(time.split(":").shift()) + 1;
-  } else {
-    time = Number(time.split(":").shift());
-  }
-  if (time < 5) {
-    time = time + 12;
-  }
-  return time;
 };

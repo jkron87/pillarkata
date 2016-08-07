@@ -58,9 +58,12 @@ describe('babysitter earns $16/hour after midnight', function(){
 
 describe('babysitter earns a sum of all segments', function(){
   it('should return $68 if start time is 7pm, bedtime is 10pm, and end is 1am', function() {
-    expect(finalInvoice(7, 10, 13)).toBe(68);
+    expect(finalInvoice("7:00", "10:00", "1:00")).toBe(68);
   });
   it('should return $88 if start time is 10pm, bedtime is 1am and end is 4am', function() {
-    expect(finalInvoice(10, 13, 16)).toBe(88);
+    expect(finalInvoice("10:00", "1:00", "4:00")).toBe(88);
+  });
+  it('should return $88 if start time is 10pm, bedtime is 1am and end is 4am', function() {
+    expect(finalInvoice("9:20", "1:00", "3:01")).toBe(88);
   });
 });
