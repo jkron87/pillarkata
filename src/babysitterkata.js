@@ -24,7 +24,7 @@ var calculateBeforeBed = function (start, bedtime) {
 
 var calculateAfterBed = function (start, bedtime, end) {
   if (bedtime > start && bedtime <= scheduleRange.lateNight && bedtime <= end) {
-    var afterBedEarned = (bedtime - start) * payrate.sleeping;
+    var afterBedEarned = (scheduleRange.lateNight - bedtime) * payrate.sleeping;
     return afterBedEarned;
   } else if (bedtime <= start && end <= scheduleRange.lateNight){
     afterBedEarned = (end - start) * payrate.sleeping;
@@ -48,7 +48,15 @@ var calculateAfterMidnight = function (start, end) {
   } else {
     return 0;
   }
-}
+};
+
+function finalInvoice (start, bedtime, end){
+  if(start >= scheduleRange.start && end <= scheduleRange.end){
+    var pay = calculateBeforeBed(start, bedtime) + calculateAfterBed(start, bedtime, end)+ calculateAfterMidnight(start, end);
+    return pay;
+    };
+  };
+
 
 
 
