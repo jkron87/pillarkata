@@ -4,48 +4,52 @@ var scheduleRange = {
   start: 5,
   lateNight: 12,
   end: 16,
-}
+};
 
 var payrate = {
   beforeBed: 12,
   sleeping: 8,
-  afterMidnight: 16
-}
+  afterMidnight: 16,
+};
 
 //Argument is a string formatted as a normal time "3:00" or "6:01PM" for example
 //returns a number representing the amount the babysitter should be paid
-function finalInvoice (startTime, bedTime, endTime){
+function finalInvoice(startTime, bedTime, endTime) {
   var start = formatTime(startTime);
   var bedtime = formatTime(bedTime);
   var end = formatTime(endTime);
-  if(start >= scheduleRange.start && end <= scheduleRange.end){
-    var pay = calculateBeforeBed(start, bedtime) + calculateAfterBed(start, bedtime, end)+ calculateAfterMidnight(start, end);
+  if (start >= scheduleRange.start && end <= scheduleRange.end) {
+    var pay = calculateBeforeBed(start, bedtime) +
+    calculateAfterBed(start, bedtime, end) + calculateAfterMidnight(start, end);
     return pay;
-    };
-  };
+  }
+}
 
 //Argument is a string formatted as a normal time "3:00" or "6:01PM" for example
 //returns a one or two digit number
-function formatTime(time){
-  if (time.indexOf('00') === -1){
-    time = Number(time.split(":").shift()) + 1;
+function formatTime(time) {
+  if (time.indexOf('00') === -1) {
+    time = Number(time.split(':').shift()) + 1;
   } else {
-    time = Number(time.split(":").shift());
+    time = Number(time.split(':').shift());
   }
+
   if (time < 5) {
     time = time + 12;
   }
+
   return time;
-};
+}
 
 //arguments should be numbers
 //returns a number
 var calculateBeforeBed = function (start, bedtime) {
-    if (bedtime > start && bedtime <= scheduleRange.lateNight){
-    var beforeBedEarned = (bedtime - start) * payrate.beforeBed;
+  var beforeBedEarned;
+  if (bedtime > start && bedtime <= scheduleRange.lateNight) {
+    beforeBedEarned = (bedtime - start) * payrate.beforeBed;
     return beforeBedEarned;
   } else if (bedtime > scheduleRange.lateNight) {
-    var beforeBedEarned = (scheduleRange.lateNight - start) * payrate.beforeBed;
+    beforeBedEarned = (scheduleRange.lateNight - start) * payrate.beforeBed;
     return beforeBedEarned;
   } else {
     return 0;
@@ -55,17 +59,17 @@ var calculateBeforeBed = function (start, bedtime) {
 //arguments should be numbers
 //returns a number
 var calculateAfterBed = function (start, bedtime, end) {
+  var afterBedEarned;
   if (bedtime > start && bedtime <= scheduleRange.lateNight && bedtime <= end) {
-    var afterBedEarned = (scheduleRange.lateNight - bedtime) * payrate.sleeping;
+    afterBedEarned = (scheduleRange.lateNight - bedtime) * payrate.sleeping;
     return afterBedEarned;
-  } else if (bedtime <= start && end <= scheduleRange.lateNight){
+  } else if (bedtime <= start && end <= scheduleRange.lateNight) {
     afterBedEarned = (end - start) * payrate.sleeping;
     return afterBedEarned;
-  } else if (bedtime <= start && end > scheduleRange.lateNight){
+  } else if (bedtime <= start && end > scheduleRange.lateNight) {
     afterBedEarned = (scheduleRange.lateNight - start) * payrate.sleeping;
     return afterBedEarned;
-  }
-  else {
+  } else {
     return 0;
   }
 };
@@ -73,8 +77,9 @@ var calculateAfterBed = function (start, bedtime, end) {
 //argument should be a number
 //returns a number
 var calculateAfterMidnight = function (start, end) {
+  var lateNightEarned;
   if (end > scheduleRange.lateNight && start <= scheduleRange.lateNight) {
-    var lateNightEarned = (end - scheduleRange.lateNight) * payrate.afterMidnight;
+    lateNightEarned = (end - scheduleRange.lateNight) * payrate.afterMidnight;
     return lateNightEarned;
   } else if (end > scheduleRange.lateNight && start > scheduleRange.lateNight) {
     lateNightEarned = (end - start) * payrate.afterMidnight;
